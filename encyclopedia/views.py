@@ -5,8 +5,9 @@ from django.http import HttpResponse
 import markdown2
 
 def index(request):
+    list_entries = ["CSS", "Django", "Git", "HTML", "Python"]
     return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries()
+        "list_entries": list_entries
     })
 
 def entries(request, title):
