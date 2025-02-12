@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from . import util
 from django.http import HttpResponse
@@ -20,3 +20,17 @@ def entries(request, title):
         "title": title,
         "content": content_html
     })
+
+def search(request):
+    query = request.GET.get('q', '')
+
+    if util.get_entry(query):
+        return redirect('entries', title=query)
+    else:
+        list_entries = util.list_entries()
+        results = [entry for entry in list_entries if query.lower() in entry.lower()]
+
+        return render(request, "encyclopedia/search.html", {
+            "query": query,
+            "results": results
+        })
