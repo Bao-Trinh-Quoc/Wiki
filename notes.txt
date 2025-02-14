@@ -1,2 +1,5 @@
 # 14/2/2024
 Added search feature
+
+changed Create new page in layout.html
+add create and tested it.

@@ -5,7 +5,7 @@ from django.http import HttpResponse
 import markdown2
 
 def index(request):
-    list_entries = ["CSS", "Django", "Git", "HTML", "Python"]
+    list_entries = util.list_entries()
     return render(request, "encyclopedia/index.html", {
         "list_entries": list_entries
     })
@@ -34,3 +34,18 @@ def search(request):
             "query": query,
             "results": results
         })
+    
+def create(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+
+        if util.get_entry(title):
+            return render(request, "encyclopedia/create.html", {
+                "error": "Entry already exists"
+            })
+        
+        util.save_entry(title, content)
+        return redirect('entries', title=title)
+    
+    return render(request, "encyclopedia/create.html")
