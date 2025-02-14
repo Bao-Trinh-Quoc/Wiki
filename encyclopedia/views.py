@@ -26,11 +26,11 @@ def search(request):
 
     if util.get_entry(query):
         return redirect('entries', title=query)
-    else:
+    else: # error here ?
         list_entries = util.list_entries()
         results = [entry for entry in list_entries if query.lower() in entry.lower()]
 
-        return render(request, "encyclopedia/search.html", {
+        return render(request, "encyclopedia/search_results.html", {
             "query": query,
             "results": results
         })
