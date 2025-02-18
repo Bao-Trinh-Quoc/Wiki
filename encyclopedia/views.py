@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from . import util
 from django.http import HttpResponse
 import markdown2
+import random
 
 def index(request):
     list_entries = util.list_entries()
@@ -68,3 +69,8 @@ def edit(request, title):
         "title": title,
         "content": content
     })
+
+def random_entry(request):
+    list_entries = util.list_entries()
+    title = random.choice(list_entries)
+    return redirect('entries', title=title)

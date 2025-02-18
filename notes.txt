@@ -6,3 +6,4 @@ add create and tested it.
 
 # 18/2/2024
 Added edit feature
+Added random page feature
