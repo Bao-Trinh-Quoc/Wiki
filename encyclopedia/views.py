@@ -26,7 +26,7 @@ def search(request):
 
     if util.get_entry(query):
         return redirect('entries', title=query)
-    else: # error here ?
+    else: 
         list_entries = util.list_entries()
         results = [entry for entry in list_entries if query.lower() in entry.lower()]
 
@@ -36,6 +36,7 @@ def search(request):
         })
     
 def create(request):
+    # when user click create button
     if request.method == "POST":
         title = request.POST.get("title")
         content = request.POST.get("content")
@@ -49,3 +50,21 @@ def create(request):
         return redirect('entries', title=title)
     
     return render(request, "encyclopedia/create.html")
+
+def edit(request, title):
+    # when user click save button
+    if request.method == "POST":
+        content = request.POST.get("content")
+        util.save_entry(title, content)
+        return redirect('entries', title=title)
+    
+    content = util.get_entry(title)
+    if content is None:
+        return render(request, "encyclopedia/error.html", {
+            "title": title
+        })
+    
+    return render(request, "encyclopedia/edit.html", {
+        "title": title,
+        "content": content
+    })
