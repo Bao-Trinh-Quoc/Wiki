@@ -7,17 +7,21 @@
 {% block body %}
     <h1>Create New Page</h1>
     <form action="{% url 'create' %}" method="post">
+        <!-- protects from CSRF  -->
         {% csrf_token %}
+        
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" name="title" required>
         </div>
+
         <div class="form-group">
             <label for="content">Content</label>
             <textarea class="form-control" id="content" name="content" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
+    <!-- in case the entry's name already existed -->
     {% if error %}
         <div class="alert alert-danger" role="alert">
             {{ error}}
